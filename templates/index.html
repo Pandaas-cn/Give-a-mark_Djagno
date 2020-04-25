@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+            integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>答辩评分</title>
+</head>
+<body>
+<script>
+    function getdata() {
+    ajaxReqs = $.ajax(
+        {
+            url:'current_name/',
+            type:'get',
+            success:function (res) {
+                $('#now_username').text(res)
+            }
+        }
+    )
+}
+$(function () {
+    getdata();
+    setInterval(function () {
+        getdata();
+    },3000)
+})
+</script>
+<div class="container">
+<div class="page-header">
+  <h1>答辩评分系统 <small>1710A</small></h1>
+</div>
+<div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>注意!使用提示：</strong> 请等待当前答辩姓名显示后再进行评分 如果答辩人为本小组成员 请在本小组评分上打钩 否则不要打钩
+</div>
+<div class="jumbotron">
+    <p>正在进行答辩的是..</p>
+    <h1 id="now_username">{{ username }}</h1>
+</div>
+<form method="post">
+    {% csrf_token %}
+  <div class="form-group">
+    <label for="exampleInputEmail1">你的打分(0-100)</label>
+    <input type="text" class="form-control" id="ratescore" placeholder="你的打分" name="ratescore" required>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="selfgroup" value="1"> 是否本组成员
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">提交</button>
+</form>
+</div>
+</body>
+</html>

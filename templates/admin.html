@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+            integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>管理员</title>
+</head>
+<body>
+<div class="container">
+<div class="page-header">
+  <h1>答辩评分系统 <small>1710A</small></h1>
+</div>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+        <th>姓名</th>
+        <th>状态</th>
+        <th>组内均分</th>
+        <th>班级均分</th>
+        <th>总均分</th>
+        <th>操作</th>
+    </tr>
+  </thead>
+    <tbody>
+    {% for obj in objs  %}
+    <tr>
+        <th>{{ obj.name }}</th>
+        {% if obj.status == "答辩中" %}
+        <th><button class="btn btn-warning">答辩中</button></th>
+        {% elif obj.status == "未答辩" %}
+        <th><button class="btn btn-danger">未答辩</button></th>
+        {% elif obj.status == "答辩完成" %}
+        <th><button class="btn btn-success">答辩完成</button></th>
+        {% endif %}
+        <th>{{ obj.g_score }}</th>
+        <th>{{ obj.a_score }}</th>
+        <th>{{ obj.e_score }}</th>
+        <th>
+            <a href="/startreply/{{ obj.id }}" class="btn btn-primary">开始答辩</a>
+            <a href="/endreply/" class="btn btn-danger">结束答辩</a>
+        </th>
+    </tr>
+    {% endfor %}
+
+
+    </tbody>
+</table>
+</div>
+</body>
+</html>
